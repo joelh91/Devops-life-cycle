@@ -43,4 +43,27 @@ jobs:
       - name: push Docker image
         run: docker push 203918843788.dkr.ecr.us-east-1.amazonaws.com/devops-lifecycle-app:${{ github.sha }}
 
-      
+  deploy:
+    needs: test
+    runs-on: [self-hosted, eks-deploy]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl
+        run: |
+          aws eks update-kubeconfig \
+            --region us-east-1 \
+            --name devops-lifecycle-eks
+
+      - name: Deploy application to EKS
+        run: |
+          kubectl set image deployment/devops-lifecycle-app \
+            joel-flask-app=203918843788.dkr.ecr.us-east-1.amazonaws.com/devops-lifecycle-app:${{ github.sha }} \
+            -n default
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/devops-lifecycle-app \
+            -n default --timeout=180s   
