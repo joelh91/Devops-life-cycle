@@ -1,5 +1,7 @@
+# Python
 .venv/
 __pycache__/
+.pytest_cache/
 
 # Terraform
 **/.terraform/
@@ -7,4 +9,17 @@ __pycache__/
 *.tfstate.*
 *.tfvars
 *.tfvars.json
+*.tfplan
+tfplan
 crash.log
+
+# Backup files
+*.bak
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+.env.*
+!.env.example
