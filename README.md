@@ -116,3 +116,53 @@ Successfully implemented an automated CI/CD pipeline that:
 - Exposes the Flask application through an AWS Load Balancer.
 
 **Result:** A working end-to-end AWS DevOps CI/CD pipeline with automated application deployment.
+
+---
+
+## Security Implementation
+
+Security is integrated throughout the DevOps lifecycle.
+
+| Component | Security Implementation |
+|---|---|
+| Docker | Lightweight base image and non-root execution |
+| GitHub Actions | Restricted workflow permissions |
+| Trivy | Vulnerability scanning and security gates |
+| AWS Authentication | OIDC and temporary credentials |
+| AWS Infrastructure | Private subnets, IAM roles and security groups |
+| Secrets Management | AWS Secrets Manager integration |
+| Kubernetes | Non-root execution and restricted Linux capabilities |
+| Terraform | Sensitive state and plan files excluded from Git |
+
+### Vulnerability Management
+
+Trivy scans container images and blocks fixable HIGH and CRITICAL vulnerabilities.
+
+Container hardening reduced detected HIGH vulnerabilities from 61 to 53, with no fixable HIGH or CRITICAL vulnerabilities remaining at the time of testing.
+
+---
+
+## Monitoring and Observability
+
+The monitoring stack is configured using Helm and kube-prometheus-stack.
+
+- **Prometheus** — Application and infrastructure metrics.
+- **Grafana** — Metrics visualization and dashboards.
+- **Alertmanager** — Alert management.
+- **ServiceMonitor** — Application metrics discovery.
+- **Node Exporter** — System-level metrics.
+- **Kube State Metrics** — Kubernetes resource metrics.
+
+Grafana is configured with an internal ClusterIP Service, and application metrics are configured to be collected every 15 seconds.
+
+---
+
+## Project Status
+
+The original end-to-end AWS deployment pipeline was successfully implemented.
+
+Docker hardening, automated testing and Trivy vulnerability scanning have been tested.
+
+The enhanced Kubernetes security, automated runner provisioning, monitoring configuration and integrated CI/CD workflow are awaiting final validation.
+
+AWS infrastructure is currently deprovisioned to minimize cloud costs.
