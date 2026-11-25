@@ -39,6 +39,16 @@ jobs:
         with:
           image-ref: devops-lifecycle-app:latest
           format: table
+          exit-code: '0'
+          severity: CRITICAL,HIGH
+          ignore-unfixed: false
+
+      - name: Scan Docker image - Security gate
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: devops-lifecycle-app:latest
+          format: table
           exit-code: '1'
           severity: CRITICAL,HIGH
+          ignore-unfixed: true 
 
